@@ -1,4 +1,4 @@
-# Betty U+1F48B
+# 💋
 
 Bun monorepo.
 
