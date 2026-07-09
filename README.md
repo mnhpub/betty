@@ -1,21 +1,11 @@
-# Betty
+# Betty U+1F48B
 
-Bun workspace monorepo.
+Bun monorepo.
 
 - `packages/api` — Hono API on Bun
 - `packages/web` — Next.js
 - `packages/app` — Expo / React Native
 
-## Setup
+## localhost
 
-```
-bun install
-```
-
-## Dev
-
-```
-bun run dev:api
-bun run dev:web
-bun run dev:app
-```
+`make`
