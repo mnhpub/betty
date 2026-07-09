@@ -1,0 +1,9 @@
+{
+  "projectId": "23112e8a-4343-4b5a-9d29-8b0bf961ffaf",
+  "pkg": "@carbon/react",
+  "globalName": "Carbon",
+  "shape": "storybook",
+  "storybookConfigDir": "packages/web/.storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "extraEntries": ["@carbon/icons-react", "@carbon/charts-react"]
+}
