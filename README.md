@@ -1,6 +1,6 @@
-# 💋
+# Betty 💋
 
-Bun monorepo.
+Bun 🥟 monorepo.
 
 - `packages/api` — Hono API on Bun
 - `packages/web` — Next.js
