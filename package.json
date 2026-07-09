@@ -1,0 +1,12 @@
+{
+  "name": "betty",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "bun --filter @betty/api dev",
+    "dev:web": "bun --filter @betty/web dev",
+    "dev:app": "bun --filter @betty/app start"
+  }
+}
