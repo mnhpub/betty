@@ -1,6 +1,17 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
+import auth from "./routes/auth";
+import type { Bindings } from "./types";
 
-const app = new Hono();
+const app = new Hono<{ Bindings: Bindings }>();
+
+app.use(
+  "*",
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:8081"],
+    credentials: true,
+  }),
+);
 
 app.get("/health", (c) => c.json({ status: "ok" }));
 
@@ -14,7 +25,6 @@ app.get("/", (c) =>
   ),
 );
 
-export default {
-  port: process.env.PORT ? Number(process.env.PORT) : 4000,
-  fetch: app.fetch,
-};
+app.route("/auth", auth);
+
+export default app;
