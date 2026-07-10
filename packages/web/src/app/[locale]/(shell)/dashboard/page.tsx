@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/session";
-import { logout } from "./actions";
+import { logout } from "@/lib/session-actions";
 import MembershipChart from "@/components/MembershipChart";
 import { Button, Grid, Column, Tile } from "@carbon/react";
 import { getDictionary } from "@/lib/i18n/dictionaries";

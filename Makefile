@@ -5,7 +5,7 @@ API_PORT ?= 8787
 WEB_PORT ?= 3000
 APP_PORT ?= 8081
 
-.PHONY: install build build-api build-web build-app clean up down fresh test-e2e
+.PHONY: install build build-api build-web build-app clean up down fresh test-e2e deploy-api deploy-web up-prd
 
 install:
 	bun install
@@ -57,3 +57,12 @@ down:
 
 test-e2e:
 	cd packages/web && bun run test:e2e
+
+deploy-api:
+	cd packages/api && wrangler d1 migrations apply betty-api --remote && wrangler deploy
+
+deploy-web:
+	cd packages/web && bun run deploy
+
+up-prd: deploy-api deploy-web
+	@echo "Production deploy complete (api + web)."

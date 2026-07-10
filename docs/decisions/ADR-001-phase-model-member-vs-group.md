@@ -1,7 +1,7 @@
 # ADR-001: Where does "phase" (journey stage) live — member, group, or both?
 
 ## Status
-Proposed — pending decision. Blocks TPOF-11 (ERD), which blocks TPOF-2 (Groups), TPOF-3 (Membership), and TPOF-4/TPOF-15 (RBAC roles).
+Accepted (2026-07-10) — Option C. Schema landed in `packages/api/migrations/0002_groups_membership_lms.sql`.
 
 ## Date
 2026-07-09
@@ -25,7 +25,7 @@ This is a schema-shaping decision. Getting it wrong means a migration and rework
 
 ## Decision
 
-**Not yet made.** This ADR exists to surface the tradeoffs so the decision can be made deliberately before TPOF-11 (ERD) starts, rather than defaulted into.
+**Option C**, accepted 2026-07-10. `users.journey_phase` (personal journey milestone) and `groups.curriculum_phase` (what the group's cohort is currently covering) are separate, decoupled fields — no automatic reconciliation between them. Group roles (Leader/Member) are scoped per `group_type` rather than global, following the Rock RMS `GroupType`/`GroupTypeRole` pattern, which also settles TPOF-4/TPOF-15 (RBAC roles) as a side effect rather than a separate decision.
 
 ## Options Considered
 

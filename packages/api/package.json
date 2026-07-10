@@ -7,8 +7,8 @@
     "start": "wrangler dev",
     "build": "wrangler deploy --dry-run --outdir dist",
     "deploy": "wrangler deploy",
-    "migrate:local": "wrangler d1 execute betty-api --local --file=migrations/0001_init.sql",
-    "migrate:remote": "wrangler d1 execute betty-api --remote --file=migrations/0001_init.sql"
+    "migrate:local": "wrangler d1 migrations apply betty-api --local",
+    "migrate:remote": "wrangler d1 migrations apply betty-api --remote"
   },
   "dependencies": {
     "hono": "^4.6.14"

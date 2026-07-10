@@ -5,7 +5,9 @@
     "members": "Members",
     "toggleNavigation": "Toggle navigation",
     "notifications": "Notifications",
+    "noNotifications": "No notifications yet",
     "account": "Account",
+    "logout": "Log out",
     "changeLanguage": "Change language"
   },
   "landing": {
@@ -41,5 +43,35 @@
     "welcome": "Welcome, {name}",
     "logout": "Log out",
     "membershipGrowth": "Membership growth"
+  },
+  "groups": {
+    "title": "Groups",
+    "newGroup": "New group",
+    "noLeader": "—",
+    "headers": {
+      "name": "Group name",
+      "type": "Type",
+      "members": "Members",
+      "leader": "Leader",
+      "status": "Status"
+    },
+    "statuses": {
+      "active": "active",
+      "waitlist": "waitlist",
+      "archived": "archived"
+    },
+    "modal": {
+      "heading": "New group",
+      "nameLabel": "Group name",
+      "typeLabel": "Type",
+      "submit": "Create",
+      "submitPending": "Creating...",
+      "cancel": "Cancel"
+    }
+  },
+  "members": {
+    "title": "Members",
+    "placeholder": "Member profiles, membership history, and multi-group membership are not built yet.",
+    "trackedAs": "Tracked as TPOF-3 (Membership) in the backlog."
   }
 }

@@ -5,7 +5,9 @@
     "members": "Miembros",
     "toggleNavigation": "Alternar navegación",
     "notifications": "Notificaciones",
+    "noNotifications": "Sin notificaciones por ahora",
     "account": "Cuenta",
+    "logout": "Cerrar sesión",
     "changeLanguage": "Cambiar idioma"
   },
   "landing": {
@@ -41,5 +43,35 @@
     "welcome": "Bienvenido, {name}",
     "logout": "Cerrar sesión",
     "membershipGrowth": "Crecimiento de membresía"
+  },
+  "groups": {
+    "title": "Grupos",
+    "newGroup": "Nuevo grupo",
+    "noLeader": "—",
+    "headers": {
+      "name": "Nombre del grupo",
+      "type": "Tipo",
+      "members": "Miembros",
+      "leader": "Líder",
+      "status": "Estado"
+    },
+    "statuses": {
+      "active": "activo",
+      "waitlist": "lista de espera",
+      "archived": "archivado"
+    },
+    "modal": {
+      "heading": "Nuevo grupo",
+      "nameLabel": "Nombre del grupo",
+      "typeLabel": "Tipo",
+      "submit": "Crear",
+      "submitPending": "Creando...",
+      "cancel": "Cancelar"
+    }
+  },
+  "members": {
+    "title": "Miembros",
+    "placeholder": "Los perfiles de miembros, el historial de membresía y la membresía en varios grupos aún no están implementados.",
+    "trackedAs": "Registrado como TPOF-3 (Membership) en el backlog."
   }
 }

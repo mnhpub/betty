@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import auth from "./routes/auth";
+import groups from "./routes/groups";
 import type { Bindings } from "./types";
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -26,5 +27,6 @@ app.get("/", (c) =>
 );
 
 app.route("/auth", auth);
+app.route("/groups", groups);
 
 export default app;

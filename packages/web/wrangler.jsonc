@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "betty-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "API_URL": "https://betty-api.mscyb.workers.dev",
+    "CF_DEPLOYMENT": "true"
+  },
+  "services": [
+    {
+      "binding": "API",
+      "service": "betty-api"
+    }
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  }
+}

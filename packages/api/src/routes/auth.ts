@@ -1,13 +1,9 @@
-import { Hono, type Context } from "hono";
-import { sign, verify } from "hono/jwt";
-import { getCookie, setCookie, deleteCookie } from "hono/cookie";
+import { Hono } from "hono";
+import { deleteCookie } from "hono/cookie";
 import { hashPassword, verifyPassword } from "../lib/password";
-import type { Bindings } from "../types";
+import { COOKIE_NAME, issueSession, requireUser, type Env } from "../lib/session";
 
-const auth = new Hono<{ Bindings: Bindings }>();
-
-const COOKIE_NAME = "betty_session";
-const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
+const auth = new Hono<Env>();
 
 type UserRow = {
   id: string;
@@ -16,28 +12,6 @@ type UserRow = {
   password_hash: string;
   created_at: string;
 };
-
-function bearerToken(c: Context): string | null {
-  const header = c.req.header("Authorization");
-  if (!header?.startsWith("Bearer ")) return null;
-  return header.slice("Bearer ".length);
-}
-
-async function issueSession(c: Context<{ Bindings: Bindings }>, userId: string): Promise<string> {
-  const token = await sign(
-    { sub: userId, exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS },
-    c.env.JWT_SECRET,
-    "HS256",
-  );
-  setCookie(c, COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: new URL(c.req.url).protocol === "https:",
-    sameSite: "Lax",
-    path: "/",
-    maxAge: SESSION_TTL_SECONDS,
-  });
-  return token;
-}
 
 auth.post("/signup", async (c) => {
   const body = await c.req.json().catch(() => null);
@@ -94,22 +68,14 @@ auth.post("/logout", async (c) => {
   return c.json({ ok: true });
 });
 
-auth.get("/me", async (c) => {
-  const token = getCookie(c, COOKIE_NAME) ?? bearerToken(c);
-  if (!token) return c.json({ error: "not authenticated" }, 401);
-
-  try {
-    const payload = await verify(token, c.env.JWT_SECRET, "HS256");
-    const user = await c.env.DB.prepare(
-      "SELECT id, email, name, created_at FROM users WHERE id = ?",
-    )
-      .bind(payload.sub as string)
-      .first<Omit<UserRow, "password_hash">>();
-    if (!user) return c.json({ error: "not authenticated" }, 401);
-    return c.json(user);
-  } catch {
-    return c.json({ error: "not authenticated" }, 401);
-  }
+auth.get("/me", requireUser, async (c) => {
+  const user = await c.env.DB.prepare(
+    "SELECT id, email, name, created_at FROM users WHERE id = ?",
+  )
+    .bind(c.get("userId"))
+    .first<Omit<UserRow, "password_hash">>();
+  if (!user) return c.json({ error: "not authenticated" }, 401);
+  return c.json(user);
 });
 
 export default auth;

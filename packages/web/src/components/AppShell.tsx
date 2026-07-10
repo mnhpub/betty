@@ -10,7 +10,8 @@ import {
   HeaderMenuButton,
   HeaderMenuItem,
   HeaderGlobalBar,
-  HeaderGlobalAction,
+  OverflowMenu,
+  OverflowMenuItem,
   SkipToContent,
   SideNav,
   SideNavItems,
@@ -19,6 +20,7 @@ import {
 } from "@carbon/react";
 import { Bell, CircleUser } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { logout } from "@/lib/session-actions";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/locales";
 
@@ -68,12 +70,22 @@ export default function AppShell({
               ))}
             </HeaderNavigation>
             <HeaderGlobalBar>
-              <HeaderGlobalAction aria-label={dict.notifications}>
-                <Bell size={20} />
-              </HeaderGlobalAction>
-              <HeaderGlobalAction aria-label={dict.account}>
-                <CircleUser size={20} />
-              </HeaderGlobalAction>
+              <OverflowMenu
+                aria-label={dict.notifications}
+                iconDescription={dict.notifications}
+                renderIcon={(props: { className?: string }) => <Bell {...props} size={20} />}
+                size="lg"
+              >
+                <OverflowMenuItem itemText={dict.noNotifications} />
+              </OverflowMenu>
+              <OverflowMenu
+                aria-label={dict.account}
+                iconDescription={dict.account}
+                renderIcon={(props: { className?: string }) => <CircleUser {...props} size={20} />}
+                size="lg"
+              >
+                <OverflowMenuItem itemText={dict.logout} onClick={() => logout()} />
+              </OverflowMenu>
               <LanguageSwitcher locale={locale} label={dict.changeLanguage} />
             </HeaderGlobalBar>
           </Header>

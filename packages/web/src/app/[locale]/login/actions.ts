@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { API_URL } from "@/lib/api";
+import { apiFetch, type AuthResponse } from "@/lib/api";
 import { setSessionToken } from "@/lib/session";
 import { currentLocale } from "@/lib/i18n/server-locale";
 
@@ -18,15 +18,15 @@ export async function login(
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
 
-  const res = await fetch(`${API_URL}/auth/login`, {
+  const res = await apiFetch("/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  const data = await res.json();
+  const data = (await res.json()) as AuthResponse;
 
-  if (!res.ok) {
-    return { error: data.error ?? "login failed" };
+  if (!res.ok || "error" in data) {
+    return { error: "error" in data ? data.error : "login failed" };
   }
 
   await setSessionToken(data.token);
@@ -41,24 +41,24 @@ export async function demoLogin(
 ): Promise<AuthActionState> {
   const credentials = { email: DEMO_EMAIL, password: DEMO_PASSWORD };
 
-  let res = await fetch(`${API_URL}/auth/login`, {
+  let res = await apiFetch("/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
   });
 
   if (res.status === 401) {
-    res = await fetch(`${API_URL}/auth/signup`, {
+    res = await apiFetch("/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...credentials, name: DEMO_NAME }),
     });
   }
 
-  const data = await res.json();
+  const data = (await res.json()) as AuthResponse;
 
-  if (!res.ok) {
-    return { error: data.error ?? "demo login failed" };
+  if (!res.ok || "error" in data) {
+    return { error: "error" in data ? data.error : "demo login failed" };
   }
 
   await setSessionToken(data.token);

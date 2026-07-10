@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { API_URL, type ApiUser } from "./api";
+import { apiFetch, type ApiUser } from "./api";
 
 const COOKIE_NAME = "betty_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
@@ -29,7 +29,7 @@ export async function getCurrentUser(): Promise<ApiUser | null> {
   const token = await getSessionToken();
   if (!token) return null;
 
-  const res = await fetch(`${API_URL}/auth/me`, {
+  const res = await apiFetch("/auth/me", {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
