@@ -10,5 +10,11 @@
       "database_name": "betty-api",
       "database_id": "daa1d784-4929-4c7f-bebb-61f58aab82df"
     }
+  ],
+  "services": [
+    {
+      "binding": "EVENTS",
+      "service": "atomik-cqrs-edge-harness-production"
+    }
   ]
 }
