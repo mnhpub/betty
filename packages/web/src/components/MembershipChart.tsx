@@ -42,7 +42,7 @@ const options: LineChartOptions = {
 
 export default function MembershipChart() {
   return (
-    <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+    <div style={{ maxWidth: "100%" }}>
       <LineChart data={data} options={options} />
     </div>
   );
