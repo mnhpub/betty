@@ -72,7 +72,6 @@ export const Default: Story = {
                     {header.header}
                   </TableHeader>
                 ))}
-                <TableHeader />
               </TableRow>
             </TableHead>
             <TableBody>
