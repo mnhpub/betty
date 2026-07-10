@@ -1,0 +1,63 @@
+# Seed data for the atomik-cqrs event store (packages/atomik-cqrs), applied directly to the
+# `events` table via schema-etl/src/apply-seed.ts — NOT through the deployed WASM /commands
+# route, which currently only knows the DemoWidget/DemoWidgetCreated aggregate used for ADR-003's
+# POC verification. This is illustrative data showing the intended real domain shape from
+# ADR-002 (LMS member events for the Prayer of Freedom platform), for anyone (human or agent)
+# querying the event store to have something meaningful to look at instead of test noise.
+#
+# `id` fields are optional throughout: when omitted, apply-seed.ts derives a stable id
+# deterministically (sha256 of aggregate id + event index + event type, truncated to 32 hex
+# chars), so re-running this seed is idempotent (INSERT ... ON CONFLICT (id) DO NOTHING) without
+# hand-authoring a UUID for every event.
+
+tenants:
+  - id: 4f994dbe-05a1-4212-840e-0c2fb7a8dc24
+    name: "Prayer of Freedom — Example Church"
+    aggregates:
+      - id: eebfd535-ba64-4b87-a0f4-dbed1826e126
+        type: Member
+        created_by: fb9fa4d4-7373-49f3-87d4-67541ee721eb # facilitator/admin who logged these on the member's behalf
+        events:
+          - type: SessionCompleted
+            timestamp: "2026-07-01T10:00:00Z"
+            data:
+              session_id: session-1
+              session_name: "Understanding Your Identity in Christ"
+              completed_at: "2026-07-01T10:00:00Z"
+              time_spent_minutes: 42
+
+          - type: PrayerApplicationLogged
+            timestamp: "2026-07-01T10:15:00Z"
+            data:
+              session_id: session-1
+              application_text: >-
+                I prayed against the spirit of rejection and declared my identity as beloved.
+              logged_at: "2026-07-01T10:15:00Z"
+
+          - type: FreedomBreakthroughDocumented
+            timestamp: "2026-07-01T10:20:00Z"
+            data:
+              session_id: session-1
+              spirit_type: rejection
+              narrative: >-
+                Experienced a real sense of release and peace after prayer ministry.
+              emotional_valence: liberated
+              follow_up_prayers: 2
+              related_concepts: [identity, sonship]
+
+          - type: SessionCompleted
+            timestamp: "2026-07-08T10:00:00Z"
+            data:
+              session_id: session-2
+              session_name: "Breaking Generational Patterns"
+              completed_at: "2026-07-08T10:00:00Z"
+              time_spent_minutes: 38
+
+          - type: PrayerApplicationLogged
+            timestamp: "2026-07-08T10:10:00Z"
+            data:
+              session_id: session-2
+              application_text: >-
+                Renounced patterns of fear passed down in my family and asked for a new inheritance
+                of peace.
+              logged_at: "2026-07-08T10:10:00Z"

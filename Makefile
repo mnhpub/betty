@@ -5,7 +5,7 @@ API_PORT ?= 8787
 WEB_PORT ?= 3000
 APP_PORT ?= 8081
 
-.PHONY: help install build build-api build-web build-app clean up down fresh migrate-local test-e2e deploy-api deploy-web deploy-cqrs deploy-cqrs-prd up-prd design-sync
+.PHONY: help install build build-api build-web build-app clean up down fresh migrate-local test-e2e deploy-api deploy-web deploy-cqrs deploy-cqrs-prd seed-cqrs-adhoc seed-cqrs-prd up-prd design-sync
 
 # `make` alone shows this menu; run `make up` to get to localhost (see README).
 .DEFAULT_GOAL := help
@@ -79,6 +79,12 @@ deploy-cqrs: ## Deploy the atomik-cqrs event-store Worker to adhoc (fresh neon-n
 
 deploy-cqrs-prd: ## Deploy the atomik-cqrs event-store Worker to production (Hyperdrive -> NEON_DB_KEY)
 	cd packages/atomik-cqrs && make edge-deploy-prd
+
+seed-cqrs-adhoc: ## Apply illustrative seed events (packages/schema-etl) to the adhoc event-store database
+	cd packages/atomik-cqrs && make seed-adhoc
+
+seed-cqrs-prd: ## Apply illustrative seed events (packages/schema-etl) to the production event-store database
+	cd packages/atomik-cqrs && make seed-prd
 
 # deploy-cqrs-prd is deliberately NOT a prerequisite here yet — folding it in changes what a
 # plain `make up-prd` does today. Run it standalone until that's an explicit decision.
