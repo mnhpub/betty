@@ -1,0 +1,482 @@
+{
+  "tables": [
+    {
+      "name": "courses",
+      "description": "LMS courses",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "sessions",
+      "description": "Course sessions within a course",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "course_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "courses",
+            "column": "id"
+          }
+        },
+        {
+          "name": "sequence",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "duration_minutes",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "manuscript",
+          "type": "json",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "topics",
+      "description": "Topics extracted from session content",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "sessions",
+            "column": "id"
+          }
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "slug",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "biblical_references",
+      "description": "Bible verses and references",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "book",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "verse",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "translation",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "text",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "spirits",
+      "description": "Spirit categorization (good, bad, infirmity)",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "nullable": false,
+          "unique": true
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "members",
+      "description": "LMS members/students",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "nullable": false,
+          "unique": true
+        },
+        {
+          "name": "enrollment_date",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "member_progress",
+      "description": "Member progress tracking per session",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "member_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "members",
+            "column": "id"
+          }
+        },
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "sessions",
+            "column": "id"
+          }
+        },
+        {
+          "name": "viewed",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "completed",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "completion_date",
+          "type": "timestamp",
+          "nullable": true
+        },
+        {
+          "name": "time_spent_minutes",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "last_accessed",
+          "type": "timestamp",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "member_assessments",
+      "description": "Member assessment results",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "member_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "members",
+            "column": "id"
+          }
+        },
+        {
+          "name": "assessment_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "score",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "attempt_count",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "member_assessment_attempts",
+      "description": "Individual assessment attempt history",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "member_assessment_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "member_assessments",
+            "column": "id"
+          }
+        },
+        {
+          "name": "attempt_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "score",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "member_interactions",
+      "description": "Member content engagement and interactions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "member_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "members",
+            "column": "id"
+          }
+        },
+        {
+          "name": "interaction_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entity_id",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "entity_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "data",
+          "type": "json",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "name": "member_custom_data",
+      "description": "Extensible custom data points for members",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "member_id",
+          "type": "uuid",
+          "nullable": false,
+          "foreignKey": {
+            "table": "members",
+            "column": "id"
+          }
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "value",
+          "type": "json",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "generatedAt": "2026-07-10T16:42:38.626Z"
+}

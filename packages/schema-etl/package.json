@@ -1,0 +1,24 @@
+{
+  "name": "betty-schema-etl",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Schema ETL service: infers database schema from domain model documentation",
+  "scripts": {
+    "build": "tsc",
+    "infer": "node dist/infer.js",
+    "generate:types": "node dist/generate-types.js",
+    "generate:migrations": "node dist/generate-migrations.js",
+    "validate": "node dist/validate.js",
+    "dev": "tsx src/infer.ts"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
