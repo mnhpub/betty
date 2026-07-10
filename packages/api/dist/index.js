@@ -3285,8 +3285,11 @@ cqrs.post("/aggregates/:id/commands", async (c) => {
 });
 cqrs.get("/aggregates/:id/state", async (c) => {
   const tenantId = c.req.query("tenant_id") ?? "";
+  const aggregateType = c.req.query("aggregate_type") ?? "";
   const res = await c.env.EVENTS.fetch(
-    new Request(`https://events/aggregates/${c.req.param("id")}/state?tenant_id=${tenantId}`)
+    new Request(
+      `https://events/aggregates/${c.req.param("id")}/state?tenant_id=${tenantId}&aggregate_type=${aggregateType}`
+    )
   );
   return new Response(res.body, res);
 });
