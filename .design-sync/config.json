@@ -5,5 +5,13 @@
   "shape": "storybook",
   "storybookConfigDir": "packages/web/.storybook",
   "storybookStatic": ".design-sync/sb-reference",
-  "extraEntries": ["@carbon/icons-react", "@carbon/charts-react"]
+  "readmeHeader": ".design-sync/conventions.md",
+  "provider": {
+    "component": "GlobalTheme",
+    "props": { "theme": "g10" }
+  },
+  "overrides": {
+    "Header": { "cardMode": "single", "primaryStory": "Default" },
+    "OverflowMenu": { "cardMode": "single", "primaryStory": "Default" }
+  }
 }
