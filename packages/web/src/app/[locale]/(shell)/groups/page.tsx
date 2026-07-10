@@ -17,7 +17,7 @@ import {
   Grid,
   Column,
 } from "@carbon/react";
-import { Add } from "@carbon/icons-react";
+import { Plus } from "lucide-react";
 
 // Mock data — stands in for TPOF-2 (Groups: creation and management) until
 // that data model and API endpoint exist.
@@ -63,7 +63,7 @@ export default function GroupsPage() {
               <TableToolbar {...getToolbarProps()}>
                 <TableToolbarContent>
                   <TableToolbarSearch onChange={onInputChange} persistent />
-                  <Button renderIcon={Add}>New group</Button>
+                  <Button renderIcon={Plus}>New group</Button>
                 </TableToolbarContent>
               </TableToolbar>
               <Table {...getTableProps()}>

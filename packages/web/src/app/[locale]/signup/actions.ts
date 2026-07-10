@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { API_URL } from "@/lib/api";
 import { setSessionToken } from "@/lib/session";
+import { currentLocale } from "@/lib/i18n/server-locale";
 
 export type AuthActionState = { error?: string };
 
@@ -26,5 +27,5 @@ export async function signup(
   }
 
   await setSessionToken(data.token);
-  redirect("/dashboard");
+  redirect(`/${await currentLocale()}/dashboard`);
 }

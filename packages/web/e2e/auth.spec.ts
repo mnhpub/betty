@@ -15,7 +15,7 @@ test("sign up redirects to the dashboard", async ({ page }) => {
   await page.goto("/signup");
   await page.getByLabel("Name").fill(user.name);
   await page.getByLabel("Email").fill(user.email);
-  await page.getByLabel("Password").fill(user.password);
+  await page.getByRole("textbox", { name: "Password" }).fill(user.password);
   await page.getByRole("button", { name: "Sign up" }).click();
 
   await expect(page).toHaveURL(/\/dashboard/);
@@ -29,7 +29,7 @@ test("existing user can log in and out", async ({ page }) => {
   await page.goto("/signup");
   await page.getByLabel("Name").fill(user.name);
   await page.getByLabel("Email").fill(user.email);
-  await page.getByLabel("Password").fill(user.password);
+  await page.getByRole("textbox", { name: "Password" }).fill(user.password);
   await page.getByRole("button", { name: "Sign up" }).click();
   await expect(page).toHaveURL(/\/dashboard/);
 
@@ -37,7 +37,7 @@ test("existing user can log in and out", async ({ page }) => {
   await expect(page).toHaveURL(/\/login/);
 
   await page.getByLabel("Email").fill(user.email);
-  await page.getByLabel("Password").fill(user.password);
+  await page.getByRole("textbox", { name: "Password" }).fill(user.password);
   await page.getByRole("button", { name: "Log in" }).click();
 
   await expect(page).toHaveURL(/\/dashboard/);
@@ -50,14 +50,14 @@ test("wrong password is rejected", async ({ page }) => {
   await page.goto("/signup");
   await page.getByLabel("Name").fill(user.name);
   await page.getByLabel("Email").fill(user.email);
-  await page.getByLabel("Password").fill(user.password);
+  await page.getByRole("textbox", { name: "Password" }).fill(user.password);
   await page.getByRole("button", { name: "Sign up" }).click();
   await expect(page).toHaveURL(/\/dashboard/);
   await page.getByRole("button", { name: "Log out" }).click();
 
   await page.goto("/login");
   await page.getByLabel("Email").fill(user.email);
-  await page.getByLabel("Password").fill("not-the-password");
+  await page.getByRole("textbox", { name: "Password" }).fill("not-the-password");
   await page.getByRole("button", { name: "Log in" }).click();
 
   await expect(page.getByText(/invalid email or password/i)).toBeVisible();

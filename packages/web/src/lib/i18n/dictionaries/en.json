@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "groups": "Groups",
+    "members": "Members",
+    "toggleNavigation": "Toggle navigation",
+    "notifications": "Notifications",
+    "account": "Account",
+    "changeLanguage": "Change language"
+  },
+  "landing": {
+    "title": "Betty",
+    "subtitle": "A community and group-management platform.",
+    "login": "Log in",
+    "signup": "Sign up"
+  },
+  "auth": {
+    "login": {
+      "heading": "Log in to Betty",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "submitPending": "Logging in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "demo": "Try the demo",
+      "demoPending": "Logging in..."
+    },
+    "signup": {
+      "heading": "Create your Betty account",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign up",
+      "submitPending": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}",
+    "logout": "Log out",
+    "membershipGrowth": "Membership growth"
+  }
+}

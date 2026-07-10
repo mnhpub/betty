@@ -2,8 +2,9 @@
 
 import { redirect } from "next/navigation";
 import { clearSessionToken } from "@/lib/session";
+import { currentLocale } from "@/lib/i18n/server-locale";
 
 export async function logout() {
   await clearSessionToken();
-  redirect("/login");
+  redirect(`/${await currentLocale()}/login`);
 }
