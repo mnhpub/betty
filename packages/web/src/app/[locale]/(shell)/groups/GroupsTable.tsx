@@ -110,7 +110,6 @@ export default function GroupsTable({
                         {header.header}
                       </TableHeader>
                     ))}
-                    <TableHeader />
                   </TableRow>
                 </TableHead>
                 <TableBody>
