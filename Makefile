@@ -5,7 +5,7 @@ API_PORT ?= 8787
 WEB_PORT ?= 3000
 APP_PORT ?= 8081
 
-.PHONY: help install build build-api build-web build-app clean up down fresh migrate-local test-e2e deploy-api deploy-web up-prd design-sync
+.PHONY: help install build build-api build-web build-app clean up down fresh migrate-local test-e2e deploy-api deploy-web deploy-cqrs deploy-cqrs-prd up-prd design-sync
 
 # `make` alone shows this menu; run `make up` to get to localhost (see README).
 .DEFAULT_GOAL := help
@@ -74,6 +74,14 @@ deploy-api: ## Apply remote D1 migrations and deploy the api
 deploy-web: ## Deploy the web package
 	cd packages/web && bun run deploy
 
+deploy-cqrs: ## Deploy the atomik-cqrs event-store Worker to adhoc (fresh neon-new branch each time)
+	cd packages/atomik-cqrs && make edge-deploy
+
+deploy-cqrs-prd: ## Deploy the atomik-cqrs event-store Worker to production (Hyperdrive -> NEON_DB_KEY)
+	cd packages/atomik-cqrs && make edge-deploy-prd
+
+# deploy-cqrs-prd is deliberately NOT a prerequisite here yet — folding it in changes what a
+# plain `make up-prd` does today. Run it standalone until that's an explicit decision.
 up-prd: deploy-api deploy-web ## Deploy api and web to production
 
 design-sync: ## Rebuild the ds-bundle diff against the Claude Design project (push still requires Claude Code)
