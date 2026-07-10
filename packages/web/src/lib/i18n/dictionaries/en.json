@@ -3,6 +3,7 @@
     "dashboard": "Dashboard",
     "groups": "Groups",
     "members": "Members",
+    "journeys": "Journey",
     "toggleNavigation": "Toggle navigation",
     "notifications": "Notifications",
     "noNotifications": "No notifications yet",
@@ -73,5 +74,16 @@
     "title": "Members",
     "placeholder": "Member profiles, membership history, and multi-group membership are not built yet.",
     "trackedAs": "Tracked as TPOF-3 (Membership) in the backlog."
+  },
+  "journeys": {
+    "title": "Member Journey",
+    "placeholder": "Showing the one example member journey seeded for the LMS event store.",
+    "trackedAs": "Personalized member journeys land with TPOF-3/TPOF-6 in the backlog.",
+    "noData": "No journey data available.",
+    "timelineHeading": "Timeline",
+    "summary": {
+      "eventsLogged": "Events logged",
+      "currentVersion": "Current version"
+    }
   }
 }

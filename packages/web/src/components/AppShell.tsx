@@ -39,6 +39,7 @@ export default function AppShell({
     { href: `/${locale}/dashboard`, label: dict.dashboard },
     { href: `/${locale}/groups`, label: dict.groups },
     { href: `/${locale}/members`, label: dict.members },
+    { href: `/${locale}/journeys`, label: dict.journeys },
   ];
 
   return (

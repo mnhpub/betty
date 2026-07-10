@@ -1,18 +1,17 @@
 import { Hono } from "hono";
-import type { Bindings } from "../types";
+import { requireUser, type Env } from "../lib/session";
 
-// Passthrough routes proving the Service Binding to the atomik-cqrs event-store Worker
-// (ADR-003 Option D) actually works end-to-end from a deployed betty-api. Deliberately thin and
-// unauthenticated for now — this validates the binding mechanism, not the real LMS domain
-// (ADR-002 territory); requireUser and real event types land when that gets built.
-const cqrs = new Hono<{ Bindings: Bindings }>();
+// Passthrough routes to the atomik-cqrs event-store Worker (ADR-003 Option D) via the EVENTS
+// Service Binding. /health stays open (pure liveness check, consistent with the root API's own
+// unauthenticated /health); the data routes require auth like every other real route.
+const cqrs = new Hono<Env>();
 
 cqrs.get("/health", async (c) => {
   const res = await c.env.EVENTS.fetch(new Request("https://events/health"));
   return new Response(res.body, res);
 });
 
-cqrs.post("/aggregates/:id/commands", async (c) => {
+cqrs.post("/aggregates/:id/commands", requireUser, async (c) => {
   const body = await c.req.text();
   const res = await c.env.EVENTS.fetch(
     new Request(`https://events/aggregates/${c.req.param("id")}/commands`, {
@@ -24,7 +23,7 @@ cqrs.post("/aggregates/:id/commands", async (c) => {
   return new Response(res.body, res);
 });
 
-cqrs.get("/aggregates/:id/state", async (c) => {
+cqrs.get("/aggregates/:id/state", requireUser, async (c) => {
   const tenantId = c.req.query("tenant_id") ?? "";
   const aggregateType = c.req.query("aggregate_type") ?? "";
   const res = await c.env.EVENTS.fetch(

@@ -3272,7 +3272,7 @@ cqrs.get("/health", async (c) => {
   const res = await c.env.EVENTS.fetch(new Request("https://events/health"));
   return new Response(res.body, res);
 });
-cqrs.post("/aggregates/:id/commands", async (c) => {
+cqrs.post("/aggregates/:id/commands", requireUser, async (c) => {
   const body = await c.req.text();
   const res = await c.env.EVENTS.fetch(
     new Request(`https://events/aggregates/${c.req.param("id")}/commands`, {
@@ -3283,7 +3283,7 @@ cqrs.post("/aggregates/:id/commands", async (c) => {
   );
   return new Response(res.body, res);
 });
-cqrs.get("/aggregates/:id/state", async (c) => {
+cqrs.get("/aggregates/:id/state", requireUser, async (c) => {
   const tenantId = c.req.query("tenant_id") ?? "";
   const aggregateType = c.req.query("aggregate_type") ?? "";
   const res = await c.env.EVENTS.fetch(
