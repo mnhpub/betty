@@ -3,6 +3,8 @@
     "dashboard": "Dashboard",
     "groups": "Groups",
     "members": "Members",
+    "journeys": "Journey",
+    "auditLog": "Audit Log",
     "toggleNavigation": "Toggle navigation",
     "notifications": "Notifications",
     "noNotifications": "No notifications yet",
@@ -24,9 +26,7 @@
       "submit": "Log in",
       "submitPending": "Logging in...",
       "noAccount": "Don't have an account?",
-      "signupLink": "Sign up",
-      "demo": "Try the demo",
-      "demoPending": "Logging in..."
+      "signupLink": "Sign up"
     },
     "signup": {
       "heading": "Create your Betty account",
@@ -73,5 +73,44 @@
     "title": "Members",
     "placeholder": "Member profiles, membership history, and multi-group membership are not built yet.",
     "trackedAs": "Tracked as TPOF-3 (Membership) in the backlog."
+  },
+  "journeys": {
+    "title": "Member Journey",
+    "placeholder": "Showing the one example member journey seeded for the LMS event store.",
+    "trackedAs": "Personalized member journeys land with TPOF-3/TPOF-6 in the backlog.",
+    "noData": "No journey data available.",
+    "timelineHeading": "Timeline",
+    "summary": {
+      "eventsLogged": "Events logged",
+      "currentVersion": "Current version"
+    }
+  },
+  "auditLog": {
+    "title": "Audit Log",
+    "addEvent": "Add event",
+    "noData": "No events logged yet.",
+    "overrideTag": "Override",
+    "expandRow": "Expand row",
+    "headers": {
+      "timestamp": "Timestamp",
+      "aggregateType": "Aggregate type",
+      "aggregateId": "Aggregate ID",
+      "eventType": "Event type",
+      "createdBy": "Created by",
+      "data": "Data"
+    },
+    "modal": {
+      "heading": "Add journal entry",
+      "aggregateIdLabel": "Aggregate ID",
+      "aggregateTypeLabel": "Aggregate type",
+      "eventTypeLabel": "Event type",
+      "dataLabel": "Data (JSON)",
+      "dataHelper": "A JSON object with the event's payload fields.",
+      "invalidJson": "Data must be valid JSON.",
+      "dataMustBeObject": "Data must be a JSON object, not an array or plain value.",
+      "submit": "Add entry",
+      "submitPending": "Adding...",
+      "cancel": "Cancel"
+    }
   }
 }

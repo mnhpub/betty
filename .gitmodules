@@ -1,0 +1,3 @@
+[submodule "packages/atomik-cqrs"]
+	path = packages/atomik-cqrs
+	url = git@github.com:mnhpub/atomik-cqrs.git

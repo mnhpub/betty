@@ -3266,6 +3266,35 @@ groups.post("/", requireUser, async (c) => {
 });
 var groups_default = groups;
 
+// src/routes/cqrs.ts
+var cqrs = new Hono2();
+cqrs.get("/health", async (c) => {
+  const res = await c.env.EVENTS.fetch(new Request("https://events/health"));
+  return new Response(res.body, res);
+});
+cqrs.post("/aggregates/:id/commands", requireUser, async (c) => {
+  const body = await c.req.text();
+  const res = await c.env.EVENTS.fetch(
+    new Request(`https://events/aggregates/${c.req.param("id")}/commands`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body
+    })
+  );
+  return new Response(res.body, res);
+});
+cqrs.get("/aggregates/:id/state", requireUser, async (c) => {
+  const tenantId = c.req.query("tenant_id") ?? "";
+  const aggregateType = c.req.query("aggregate_type") ?? "";
+  const res = await c.env.EVENTS.fetch(
+    new Request(
+      `https://events/aggregates/${c.req.param("id")}/state?tenant_id=${tenantId}&aggregate_type=${aggregateType}`
+    )
+  );
+  return new Response(res.body, res);
+});
+var cqrs_default = cqrs;
+
 // ../../node_modules/.bun/hono@4.12.28/node_modules/hono/dist/jsx/constants.js
 var DOM_RENDERER = /* @__PURE__ */ Symbol("RENDERER");
 var DOM_ERROR_HANDLER = /* @__PURE__ */ Symbol("ERROR_HANDLER");
@@ -4094,6 +4123,7 @@ app.get(
 );
 app.route("/auth", auth_default);
 app.route("/groups", groups_default);
+app.route("/cqrs", cqrs_default);
 var index_default = app;
 export {
   index_default as default

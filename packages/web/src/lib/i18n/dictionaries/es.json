@@ -3,6 +3,8 @@
     "dashboard": "Panel",
     "groups": "Grupos",
     "members": "Miembros",
+    "journeys": "Trayectoria",
+    "auditLog": "Registro de auditoría",
     "toggleNavigation": "Alternar navegación",
     "notifications": "Notificaciones",
     "noNotifications": "Sin notificaciones por ahora",
@@ -24,9 +26,7 @@
       "submit": "Iniciar sesión",
       "submitPending": "Iniciando sesión...",
       "noAccount": "¿No tienes una cuenta?",
-      "signupLink": "Regístrate",
-      "demo": "Probar la demo",
-      "demoPending": "Iniciando sesión..."
+      "signupLink": "Regístrate"
     },
     "signup": {
       "heading": "Crea tu cuenta de Betty",
@@ -73,5 +73,44 @@
     "title": "Miembros",
     "placeholder": "Los perfiles de miembros, el historial de membresía y la membresía en varios grupos aún no están implementados.",
     "trackedAs": "Registrado como TPOF-3 (Membership) en el backlog."
+  },
+  "journeys": {
+    "title": "Trayectoria del miembro",
+    "placeholder": "Mostrando la trayectoria de miembro de ejemplo sembrada para el almacén de eventos del LMS.",
+    "trackedAs": "Las trayectorias personalizadas de miembros llegarán con TPOF-3/TPOF-6 en el backlog.",
+    "noData": "No hay datos de trayectoria disponibles.",
+    "timelineHeading": "Cronología",
+    "summary": {
+      "eventsLogged": "Eventos registrados",
+      "currentVersion": "Versión actual"
+    }
+  },
+  "auditLog": {
+    "title": "Registro de auditoría",
+    "addEvent": "Agregar evento",
+    "noData": "Aún no hay eventos registrados.",
+    "overrideTag": "Anulación",
+    "expandRow": "Expandir fila",
+    "headers": {
+      "timestamp": "Fecha y hora",
+      "aggregateType": "Tipo de agregado",
+      "aggregateId": "ID de agregado",
+      "eventType": "Tipo de evento",
+      "createdBy": "Creado por",
+      "data": "Datos"
+    },
+    "modal": {
+      "heading": "Agregar entrada de diario",
+      "aggregateIdLabel": "ID de agregado",
+      "aggregateTypeLabel": "Tipo de agregado",
+      "eventTypeLabel": "Tipo de evento",
+      "dataLabel": "Datos (JSON)",
+      "dataHelper": "Un objeto JSON con los campos de datos del evento.",
+      "invalidJson": "Los datos deben ser JSON válido.",
+      "dataMustBeObject": "Los datos deben ser un objeto JSON, no un arreglo ni un valor simple.",
+      "submit": "Agregar entrada",
+      "submitPending": "Agregando...",
+      "cancel": "Cancelar"
+    }
   }
 }

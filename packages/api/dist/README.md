@@ -1,1 +1,1 @@
-This folder contains the built output assets for the worker "betty-api" generated at 2026-07-10T03:08:28.179Z.
+This folder contains the built output assets for the worker "betty-api" generated at 2026-07-10T21:16:25.569Z.
