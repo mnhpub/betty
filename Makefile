@@ -5,7 +5,7 @@ API_PORT ?= 8787
 WEB_PORT ?= 3000
 APP_PORT ?= 8081
 
-.PHONY: help install build build-api build-web build-app clean up down fresh migrate-local test-e2e deploy-api deploy-web deploy-cqrs deploy-cqrs-prd seed-cqrs-adhoc seed-cqrs-prd up-prd design-sync
+.PHONY: help install build build-api build-web build-app clean up down fresh migrate-local seed-demo provision-cqrs build-cqrs-wasm seed-cqrs-local test-e2e deploy-api deploy-web deploy-cqrs deploy-cqrs-prd seed-cqrs-adhoc seed-cqrs-prd up-prd design-sync
 
 # `make` alone shows this menu; run `make up` to get to localhost (see README).
 .DEFAULT_GOAL := help
@@ -19,6 +19,18 @@ install: ## Install dependencies
 
 migrate-local: ## Run local DB migrations for the API
 	cd packages/api && bun run migrate:local
+
+seed-demo: ## Seed demo user credentials into the local API database
+	cd packages/api && bun run seed:demo
+
+provision-cqrs: ## Provision a local Neon database for CQRS (via neon-new)
+	cd packages/atomik-cqrs && make db-provision
+
+build-cqrs-wasm: ## Build the CQRS edge worker WASM binary
+	cd packages/atomik-cqrs && make wasm
+
+seed-cqrs-local: ## Seed demo events into the local CQRS database
+	cd packages/atomik-cqrs && make seed-adhoc
 
 build: build-api build-web build-app ## Build api, web, and app
 
@@ -46,16 +58,26 @@ fresh: ## Free dev ports left over from a stale run
 	done
 	@rm -f $(PIDS_DIR)/*.pid
 
-up: install fresh migrate-local ## Start api, web, and app locally
+up: install fresh migrate-local seed-demo provision-cqrs build-cqrs-wasm ## Start api, web, app, and cqrs locally
 	@mkdir -p $(PIDS_DIR) $(LOGS_DIR)
 	@echo "API_URL=http://localhost:$(API_PORT)" > packages/web/.env.local
+	@bash -c 'cd packages/atomik-cqrs && CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="$$(grep ATOMIK_DATABASE_URL .env.local | cut -d= -f2-)" exec bunx wrangler dev --config edge/wrangler.jsonc --port 8788' > $(LOGS_DIR)/cqrs.log 2>&1 & echo $$! > $(PIDS_DIR)/cqrs.pid
+	@sleep 4
 	@bash -c 'cd packages/api && exec bun run dev --port $(API_PORT)' > $(LOGS_DIR)/api.log 2>&1 & echo $$! > $(PIDS_DIR)/api.pid
 	@bash -c 'cd packages/web && exec bun run dev --port $(WEB_PORT)' > $(LOGS_DIR)/web.log 2>&1 & echo $$! > $(PIDS_DIR)/web.pid
 	@bash -c 'cd packages/app && exec bun run start --port $(APP_PORT)' > $(LOGS_DIR)/app.log 2>&1 & echo $$! > $(PIDS_DIR)/app.pid
 	@sleep 1
-	@echo "api  -> http://localhost:$(API_PORT)  (log: $(LOGS_DIR)/api.log)"
-	@echo "web  -> http://localhost:$(WEB_PORT)  (log: $(LOGS_DIR)/web.log)"
-	@echo "app  -> Metro on :$(APP_PORT)         (log: $(LOGS_DIR)/app.log)"
+	@make seed-cqrs-local
+	@echo ""
+	@echo "Services running:"
+	@echo "  cqrs -> edge worker (atomik-cqrs) (log: $(LOGS_DIR)/cqrs.log)"
+	@echo "  api  -> http://localhost:$(API_PORT)  (log: $(LOGS_DIR)/api.log)"
+	@echo "  web  -> http://localhost:$(WEB_PORT)  (log: $(LOGS_DIR)/web.log)"
+	@echo "  app  -> Metro on :$(APP_PORT)         (log: $(LOGS_DIR)/app.log)"
+	@echo ""
+	@echo "Demo Credentials:"
+	@echo "  📧 Email:    demo@example.com"
+	@echo "  🔐 Password: demo1234"
 
 down: ## Stop the locally running api, web, and app processes
 	@for f in $(PIDS_DIR)/*.pid; do \
