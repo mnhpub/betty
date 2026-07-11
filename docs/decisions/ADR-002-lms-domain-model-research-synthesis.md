@@ -3,6 +3,11 @@
 ## Status
 Proposed (2026-07-10)
 
+**Note:** The field names in this ADR describe **read-side projection** schemas (computed read
+models built from events). The **write-side event-store catalog** naming was walked back to
+domain-agnostic vocabulary in [ADR-004](ADR-004-domain-agnostic-event-catalog-naming.md) to
+enable platform reuse. These are separate layers — do not conflate them.
+
 ## Date
 2026-07-10
 

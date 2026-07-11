@@ -111,8 +111,10 @@ land back in `opengineorg/atomik-cqrs`.
 ## Consequences
 
 - [ADR-002](ADR-002-lms-domain-model-research-synthesis.md)'s member-event fields
-  (`freedom_breakthroughs_timeline`, `spirit_tracking`, quiz attempts) become the concrete
-  `DomainEvent` payloads for this store.
+  (`freedom_breakthroughs_timeline`, `spirit_tracking`, quiz attempts) informed the initial
+  event-store catalog. **Superseded by [ADR-004](ADR-004-domain-agnostic-event-catalog-naming.md):**
+  the concrete event-store write-side naming was walked back to domain-agnostic vocabulary to
+  enable platform reuse across domains.
 - Adds Postgres as a second database alongside D1 — real operational cost (hosting, backups,
   migrations) that Betty is now taking on.
 - Adds a second *implementation* of the persistence layer (TS/Hyperdrive) that must be kept in

@@ -1,9 +1,8 @@
 # Seed data for the atomik-cqrs event store (packages/atomik-cqrs), applied directly to the
 # `events` table via schema-etl/src/apply-seed.ts — NOT through the deployed WASM /commands
 # route, which currently only knows the DemoWidget/DemoWidgetCreated aggregate used for ADR-003's
-# POC verification. This is illustrative data showing the intended real domain shape from
-# ADR-002 (LMS member events for the Prayer of Freedom platform), for anyone (human or agent)
-# querying the event store to have something meaningful to look at instead of test noise.
+# POC verification. This is illustrative domain-agnostic data per ADR-004, for anyone querying
+# the event store to have something meaningful to look at instead of test noise.
 #
 # `id` fields are optional throughout: when omitted, apply-seed.ts derives a stable id
 # deterministically (sha256 of aggregate id + event index + event type, truncated to 32 hex
@@ -12,7 +11,7 @@
 
 tenants:
   - id: 4f994dbe-05a1-4212-840e-0c2fb7a8dc24
-    name: "Prayer of Freedom — Example Church"
+    name: "Example Organization"
     aggregates:
       - id: eebfd535-ba64-4b87-a0f4-dbed1826e126
         type: Member
@@ -26,24 +25,24 @@ tenants:
               completed_at: "2026-07-01T10:00:00Z"
               time_spent_minutes: 42
 
-          - type: PrayerApplicationLogged
+          - type: ReflectionLogged
             timestamp: "2026-07-01T10:15:00Z"
             data:
               session_id: session-1
-              application_text: >-
-                I prayed against the spirit of rejection and declared my identity as beloved.
+              reflection_text: >-
+                Reflected on key insights and implications from the session content.
               logged_at: "2026-07-01T10:15:00Z"
 
-          - type: FreedomBreakthroughDocumented
+          - type: MilestoneDocumented
             timestamp: "2026-07-01T10:20:00Z"
             data:
               session_id: session-1
-              spirit_type: rejection
+              category: identity
               narrative: >-
-                Experienced a real sense of release and peace after prayer ministry.
-              emotional_valence: liberated
-              follow_up_prayers: 2
-              related_concepts: [identity, sonship]
+                Documented a significant milestone in participant progress.
+              outcome: positive
+              follow_up_actions: 2
+              related_topics: [core_concepts, next_steps]
 
           - type: SessionCompleted
             timestamp: "2026-07-08T10:00:00Z"
@@ -53,11 +52,10 @@ tenants:
               completed_at: "2026-07-08T10:00:00Z"
               time_spent_minutes: 38
 
-          - type: PrayerApplicationLogged
+          - type: ReflectionLogged
             timestamp: "2026-07-08T10:10:00Z"
             data:
               session_id: session-2
-              application_text: >-
-                Renounced patterns of fear passed down in my family and asked for a new inheritance
-                of peace.
+              reflection_text: >-
+                Participant recorded observations and lessons learned from the session.
               logged_at: "2026-07-08T10:10:00Z"
