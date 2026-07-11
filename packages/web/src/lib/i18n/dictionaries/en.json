@@ -4,6 +4,7 @@
     "groups": "Groups",
     "members": "Members",
     "journeys": "Journey",
+    "auditLog": "Audit Log",
     "toggleNavigation": "Toggle navigation",
     "notifications": "Notifications",
     "noNotifications": "No notifications yet",
@@ -25,9 +26,7 @@
       "submit": "Log in",
       "submitPending": "Logging in...",
       "noAccount": "Don't have an account?",
-      "signupLink": "Sign up",
-      "demo": "Try the demo",
-      "demoPending": "Logging in..."
+      "signupLink": "Sign up"
     },
     "signup": {
       "heading": "Create your Betty account",
@@ -84,6 +83,34 @@
     "summary": {
       "eventsLogged": "Events logged",
       "currentVersion": "Current version"
+    }
+  },
+  "auditLog": {
+    "title": "Audit Log",
+    "addEvent": "Add event",
+    "noData": "No events logged yet.",
+    "overrideTag": "Override",
+    "expandRow": "Expand row",
+    "headers": {
+      "timestamp": "Timestamp",
+      "aggregateType": "Aggregate type",
+      "aggregateId": "Aggregate ID",
+      "eventType": "Event type",
+      "createdBy": "Created by",
+      "data": "Data"
+    },
+    "modal": {
+      "heading": "Add journal entry",
+      "aggregateIdLabel": "Aggregate ID",
+      "aggregateTypeLabel": "Aggregate type",
+      "eventTypeLabel": "Event type",
+      "dataLabel": "Data (JSON)",
+      "dataHelper": "A JSON object with the event's payload fields.",
+      "invalidJson": "Data must be valid JSON.",
+      "dataMustBeObject": "Data must be a JSON object, not an array or plain value.",
+      "submit": "Add entry",
+      "submitPending": "Adding...",
+      "cancel": "Cancel"
     }
   }
 }

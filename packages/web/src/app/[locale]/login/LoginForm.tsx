@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { Button, Column, Grid, InlineNotification, PasswordInput, Stack, TextInput, Tile } from "@carbon/react";
-import { login, demoLogin, type AuthActionState } from "./actions";
+import { login, type AuthActionState } from "./actions";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/locales";
 
@@ -11,7 +11,6 @@ const initialState: AuthActionState = {};
 
 export default function LoginForm({ locale, dict }: { locale: Locale; dict: Dictionary["auth"]["login"] }) {
   const [state, formAction, pending] = useActionState(login, initialState);
-  const [demoState, demoFormAction, demoPending] = useActionState(demoLogin, initialState);
 
   return (
     <Grid fullWidth style={{ minHeight: "100vh", alignContent: "center" }}>
@@ -42,17 +41,6 @@ export default function LoginForm({ locale, dict }: { locale: Locale; dict: Dict
               </Stack>
             </form>
           </Tile>
-
-          <form action={demoFormAction}>
-            <Stack gap={3}>
-              {demoState?.error && (
-                <InlineNotification kind="error" title={demoState.error} hideCloseButton lowContrast />
-              )}
-              <Button type="submit" kind="tertiary" disabled={demoPending} style={{ width: "100%" }}>
-                {demoPending ? dict.demoPending : dict.demo}
-              </Button>
-            </Stack>
-          </form>
         </Stack>
       </Column>
     </Grid>

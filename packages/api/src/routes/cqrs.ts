@@ -12,12 +12,15 @@ cqrs.get("/health", async (c) => {
 });
 
 cqrs.post("/aggregates/:id/commands", requireUser, async (c) => {
-  const body = await c.req.text();
+  const body = await c.req.json();
+  // user_id must come from the verified session, not the client-supplied body — otherwise
+  // any caller could attribute a journal entry to an arbitrary user.
+  body.user_id = c.get("userId");
   const res = await c.env.EVENTS.fetch(
     new Request(`https://events/aggregates/${c.req.param("id")}/commands`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body,
+      body: JSON.stringify(body),
     }),
   );
   return new Response(res.body, res);
@@ -31,6 +34,12 @@ cqrs.get("/aggregates/:id/state", requireUser, async (c) => {
       `https://events/aggregates/${c.req.param("id")}/state?tenant_id=${tenantId}&aggregate_type=${aggregateType}`,
     ),
   );
+  return new Response(res.body, res);
+});
+
+cqrs.get("/events", requireUser, async (c) => {
+  const tenantId = c.req.query("tenant_id") ?? "";
+  const res = await c.env.EVENTS.fetch(new Request(`https://events/events?tenant_id=${tenantId}`));
   return new Response(res.body, res);
 });
 

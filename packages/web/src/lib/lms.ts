@@ -18,7 +18,7 @@ export type MemberJourney = {
 // Placeholder demo identity — no real membership/enrollment data model exists yet
 // (TPOF-3/TPOF-6 are still backlog). This is the one Prayer of Freedom member seeded via
 // packages/schema-etl, not tied to the logged-in user.
-const DEMO_TENANT_ID = "4f994dbe-05a1-4212-840e-0c2fb7a8dc24";
+export const DEMO_TENANT_ID = "4f994dbe-05a1-4212-840e-0c2fb7a8dc24";
 const DEMO_MEMBER_ID = "eebfd535-ba64-4b87-a0f4-dbed1826e126";
 
 async function authedFetch(path: string, init?: RequestInit): Promise<Response | null> {
